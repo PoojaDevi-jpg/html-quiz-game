@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Quiz Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background-color: #f0f0f0;
+    }
+    #quiz {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1, p {
+      margin-bottom: 20px;
+    }
+    #question {
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    #answer {
+      padding: 10px;
+      width: 100%;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    #feedback {
+      margin-top: 10px;
+      font-style: italic;
+      color: #888;
+    }
+    .button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div id="quiz">
+    <h1>HTML Quiz Game</h1>
+    <p id="question">Question will appear here</p>
+    <input type="text" id="answer" placeholder="Your answer">
+    <button class="button" id="submitBtn">Submit Answer</button>
+    <p id="feedback"></p>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    const questions = [
+      { question: "What does HTML stand for?", answer: "Hyper Text Markup Language" },
+      { question: "Which tag is used for making a paragraph?", answer: "p" },
+      { question: "What is the correct tag for inserting an image?", answer: "img" }
+      // Add more questions as needed
+    ];
+
+    let currentQuestion = 0;
+    const questionElement = $("#question");
+    const answerElement = $("#answer");
+    const feedbackElement = $("#feedback");
+    const submitBtn = $("#submitBtn");
+
+    function displayQuestion() {
+      questionElement.text(questions[currentQuestion].question);
+      answerElement.val("");
+      feedbackElement.text("");
+    }
+
+    function checkAnswer() {
+      const userAnswer = answerElement.val().trim().toLowerCase();
+      const correctAnswer = questions[currentQuestion].answer.toLowerCase();
+
+      if (userAnswer === correctAnswer) {
+        feedbackElement.text("Correct! Well done.");
+      } else {
+        feedbackElement.text("Incorrect. Try again!");
+      }
+
+      // Move to the next question
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        displayQuestion();
+      } else {
+        questionElement.text("Quiz completed!");
+        answerElement.hide();
+        submitBtn.hide();
+      }
+    }
+
+    // Event listener for submit button click
+    submitBtn.click(checkAnswer);
+
+    // Start the game
+    displayQuestion();
+  </script>
+</body>
+</html>
